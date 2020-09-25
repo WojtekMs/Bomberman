@@ -34,3 +34,7 @@ void Player::moveRight() {
     }
     col_++;
 }
+
+void Player::placeBomb() {
+    
+}
