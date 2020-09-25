@@ -44,10 +44,5 @@ target_link_libraries(${PROJECT_NAME}-ut gtest_main)
 enable_testing()
 add_test(NAME bomberman_test COMMAND ${PROJECT_NAME}-ut)
 
-set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/" ${CMAKE_MODULE_PATH})
-find_package(SFML 2.4 COMPONENTS graphics window system REQUIRED)
-
-if (SFML_FOUND)
-    include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${SFML_WINDOW_LIBRARY_DEBUG} ${SFML_GRAPHICS_LIBRARY_DEBUG} ${SFML_SYSTEM_LIBRARY_DEBUG})
-endif ()
+find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system) #${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${SFML_WINDOW_LIBRARY_DEBUG} ${SFML_GRAPHICS_LIBRARY_DEBUG} ${SFML_SYSTEM_LIBRARY_DEBUG})
