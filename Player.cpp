@@ -20,3 +20,10 @@ void Player::moveDown() {
     }
     row_++;
 }
+
+void Player::moveLeft() {
+    if (board_.getField(col_ - 1, row_).isWall) {
+        return;
+    }
+    col_--;
+}

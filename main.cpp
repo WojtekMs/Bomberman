@@ -25,17 +25,12 @@ void displayBoard(Board& b, Player& p) {
 int main() {
     std::string dash(60, '-');
     Board board(13, 11);
-    Player player(board, 5, 10);
+    Player player(board, 2, 7);
     displayBoard(board, player);
     std::cout << dash << '\n';
-    player.moveDown();
-    std::cout << player.getRow();
-    displayBoard(board, player);
-    std::cout << dash << '\n';
-    player.moveDown();
-    std::cout << player.getRow();
-    player.moveDown();
-    std::cout << player.getRow();
+    player.moveLeft();
+    player.moveLeft();
+    player.moveLeft();
     displayBoard(board, player);
     std::cout << dash << '\n';
 
