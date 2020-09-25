@@ -38,11 +38,17 @@ set(${CXX_STANDARD} 17)
 set(${CXX_STANDARD_REQUIRED} ON)
 
 # Now simply link against gtest or gtest_main as needed. Eg
+
+set(SRC_LIST
+  Board.cpp 
+)
+add_library(SRC ${SRC_LIST})
 add_executable(${PROJECT_NAME} main.cpp)
 add_executable(${PROJECT_NAME}-ut tests/test.cpp)
-target_link_libraries(${PROJECT_NAME}-ut gtest_main)
+target_link_libraries(${PROJECT_NAME}-ut gtest_main SRC)
+target_link_libraries(${PROJECT_NAME} SRC)
 enable_testing()
 add_test(NAME bomberman_test COMMAND ${PROJECT_NAME}-ut)
 
 find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system) #${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${SFML_WINDOW_LIBRARY_DEBUG} ${SFML_GRAPHICS_LIBRARY_DEBUG} ${SFML_SYSTEM_LIBRARY_DEBUG})
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
