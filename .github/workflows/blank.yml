@@ -15,6 +15,7 @@ jobs:
     - name: Compile
       working-directory: build
       run: |
+        sudo apt-get install libsfml-dev
         cmake ..
         make
     - name: Run tests
