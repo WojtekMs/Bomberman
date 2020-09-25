@@ -40,7 +40,8 @@ set(${CXX_STANDARD_REQUIRED} ON)
 # Now simply link against gtest or gtest_main as needed. Eg
 
 set(SRC_LIST
-  Board.cpp 
+  Board.cpp
+  Player.cpp
 )
 add_library(SRC ${SRC_LIST})
 add_executable(${PROJECT_NAME} main.cpp)

@@ -1,13 +1,18 @@
 #include <SFML/Graphics.hpp>
-#include "Board.hpp"
 #include <iostream>
+#include <string>
 
-void displayBoard(Board& b) {
-    for(int row = 0; row < b.getHeight(); row++) {
+#include "Board.hpp"
+#include "Player.hpp"
+
+void displayBoard(Board& b, Player& p) {
+    for (int row = 0; row < b.getHeight(); row++) {
         for (int col = 0; col < b.getWidth(); col++) {
             std::cout << "[ ";
             if (b.getField(col, row).isWall) {
                 std::cout << "W";
+            } else if (p.getCol() == col && p.getRow() == row) {
+                std::cout << "P";
             } else {
                 std::cout << " ";
             }
@@ -17,11 +22,20 @@ void displayBoard(Board& b) {
     }
 }
 
-int main()
-{
+int main() {
+    std::string dash(60, '-');
     Board board(13, 11);
-    displayBoard(board);
-    
+    Player player(board, 5, 3);
+    displayBoard(board, player);
+    std::cout << dash << '\n';
+    player.moveUp();
+    player.moveUp();
+    displayBoard(board, player);
+    std::cout << dash << '\n';
+    player.moveUp();
+    displayBoard(board, player);
+    std::cout << dash << '\n';
+
     // sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     // sf::CircleShape shape(100.f);
     // shape.setFillColor(sf::Color::Green);
