@@ -1,7 +1,7 @@
 #include "Board.hpp"
+#include <iostream>
 
-Board::Board(int height, int width)
-:height_(height), width_(width) {
+void Board::draw(int height, int width) {
     for (int row = 0; row < height_; ++row) {
         for (int col = 0; col < width_; ++col) {
             if(col == 0 || col == width_ - 1) {
@@ -13,4 +13,17 @@ Board::Board(int height, int width)
             }
         }
     }
+}
+
+Board::Board(int height, int width)
+:height_(height), width_(width) {
+    draw(height_, width_);
+    if (!texture_.loadFromFile("img/map.png")) {
+        std::cerr << "Error :CCCCCCCCCCC\n";
+    }
+    map_.setTexture(texture_);
+}
+
+sf::Sprite Board::getSprite() const {
+    return map_;
 }
