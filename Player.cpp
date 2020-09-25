@@ -27,3 +27,10 @@ void Player::moveLeft() {
     }
     col_--;
 }
+
+void Player::moveRight() {
+    if (board_.getField(col_ + 1, row_).isWall) {
+        return;
+    }
+    col_++;
+}
