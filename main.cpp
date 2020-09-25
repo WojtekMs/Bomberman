@@ -1,38 +1,44 @@
-<<<<<<< HEAD
 #include <SFML/Graphics.hpp>
+#include "Board.hpp"
 #include <iostream>
 
-int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Bomberman");
-
-    sf::Texture texture;
-    if(!texture.loadFromFile("map.png")) {
-        std::cerr << ":C\n";
-    }
-
-    sf::Sprite sprite(texture);
-    sprite.setScale(0.75f, 0.75f);
-    sf::Vector2u size = texture.getSize();
-
-    sprite.setOrigin(size.x / 2, size.y / 2);
-    window.clear();
-    window.draw(sprite);
-    window.display();
-    
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
+void displayBoard(Board& b) {
+    for(int row = 0; row < b.getHeight(); row++) {
+        for (int col = 0; col < b.getWidth(); col++) {
+            std::cout << "[ ";
+            if (b.getField(col, row).isWall) {
+                std::cout << "W";
+            } else {
+                std::cout << " ";
+            }
+            std::cout << " ]";
         }
-
-        
-        // window.clear();
-        // window.draw(sprite);
-        // window.display();
-        
+        std::cout << '\n';
     }
+}
 
-    return 0;
+int main()
+{
+    Board board(10, 10);
+    displayBoard(board);
+    
+    // sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    // sf::CircleShape shape(100.f);
+    // shape.setFillColor(sf::Color::Green);
+
+    // while (window.isOpen())
+    // {
+    //     sf::Event event;
+    //     while (window.pollEvent(event))
+    //     {
+    //         if (event.type == sf::Event::Closed)
+    //             window.close();
+    //     }
+
+    //     window.clear();
+    //     window.draw(shape);
+    //     window.display();
+    // }
+
+    // return 0;
 }
