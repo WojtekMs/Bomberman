@@ -19,7 +19,7 @@ void displayBoard(Board& b) {
 
 int main()
 {
-    Board board(10, 10);
+    Board board(13, 11);
     displayBoard(board);
     
     // sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
