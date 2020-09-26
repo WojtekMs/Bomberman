@@ -1,8 +1,9 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 
 class Bomb {
-    int col_{-1};
-    int row_{-1};
+    int col_{-5};
+    int row_{-5};
     int firePower_{2};
     int timeToBlow_{3};
 
@@ -13,4 +14,5 @@ class Bomb {
     int getFirePower() const { return firePower_; }
     int getTimeToBlow() const { return timeToBlow_; }
     void blow();
+    
 };
