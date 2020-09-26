@@ -17,28 +17,36 @@ void displayBoard(Board& b) {
     }
 }
 
+constexpr int height_ = 13;
+constexpr int width_  = 11;
+
 int main()
 {
-    Board board(13, 11);
-    displayBoard(board);
+    // Board board(13, 11);
+    // displayBoard(board);
     
-    // sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    // sf::CircleShape shape(100.f);
-    // shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
+    Board board(19, 25);
+    //displayBoard(board);
 
-    // while (window.isOpen())
-    // {
-    //     sf::Event event;
-    //     while (window.pollEvent(event))
-    //     {
-    //         if (event.type == sf::Event::Closed)
-    //             window.close();
-    //     }
+    
 
-    //     window.clear();
-    //     window.draw(shape);
-    //     window.display();
-    // }
+    window.display();
+    
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        window.clear();
+        window.draw(board.getSprite());
+        board.draw(window);
+        window.display();
+    
+    }
 
-    // return 0;
+    return 0;
 }
