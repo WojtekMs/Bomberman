@@ -4,7 +4,7 @@
 #include <iostream>
 
 Player::Player(Board& board, int col, int row)
-    : board_(board), col_(col), row_(row) {
+    : board_(board), col_(col), row_(row), bomb_(3, 3) {
     textureUp_.loadFromFile("img/playerUp.PNG");
     spriteUp_.setTexture(textureUp_);
     textureDown_.loadFromFile("img/playerDown.PNG");
@@ -13,6 +13,8 @@ Player::Player(Board& board, int col, int row)
     spriteLeft_.setTexture(textureLeft_);
     textureRight_.loadFromFile("img/playerRight.PNG");
     spriteRight_.setTexture(textureRight_);
+    textureBomb_.loadFromFile("img/bomb.png");
+    spriteBomb_.setTexture(textureBomb_);
 }
 
 void Player::moveUp() {
@@ -80,4 +82,9 @@ void Player::updateIsBombPlaced(sf::Time elapsedTime) {
     if (elapsedTime.asSeconds() >= bomb_.getTimeToBlow()) {
         isBombPlaced_ = false;
     }
+}
+
+void Player::drawBomb(sf::RenderWindow& win) {
+    spriteBomb_.setPosition(bomb_.getCol() * 32, bomb_.getRow() * 32);
+    win.draw(spriteBomb_);
 }

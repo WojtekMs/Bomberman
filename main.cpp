@@ -46,6 +46,9 @@ int main() {
         window.clear();
         window.draw(board.getSprite());
         board.draw(window);
+        if(player.isBombPlaced()) {
+            player.drawBomb(window);
+        }
         player.draw(player.getCurrentDirection(), window);
         window.display();
     

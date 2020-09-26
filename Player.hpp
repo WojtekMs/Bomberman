@@ -18,7 +18,7 @@ class Player :public Movable {
     Board& board_;
     bool isBombPlaced_{false};
     Direction currentDirection_{Direction::RIGHT};
-    Bomb bomb_{-1, -1};
+    Bomb bomb_;
 
     sf::Texture textureLeft_;
     sf::Texture textureRight_;
@@ -29,6 +29,9 @@ class Player :public Movable {
     sf::Sprite spriteRight_;
     sf::Sprite spriteUp_;
     sf::Sprite spriteDown_;
+
+    sf::Texture textureBomb_;
+    sf::Sprite spriteBomb_;
 
     public:
     Player(Board& board, int col, int row);
@@ -41,7 +44,8 @@ class Player :public Movable {
     int getRow() const { return row_; }
     bool isBombPlaced() const { return isBombPlaced_; }
     Direction getCurrentDirection() const { return currentDirection_; }
-    const Bomb& getBomb() const { return bomb_; }
+    Bomb& getBomb()  { return bomb_; }
     void draw(Direction dir, sf::RenderWindow& win);
     void updateIsBombPlaced(sf::Time elapsedTime);
+    void drawBomb(sf::RenderWindow& win);
 };
