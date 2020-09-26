@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Board.hpp"
+#include "GameController.hpp"
 #include "Player.hpp"
 #include "GameController.hpp"
 
@@ -28,7 +29,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
     Board board(19, 25);
     Player player(board, 10, 10);
-    GameController game(board, player);
+    GameController gc(board, player);
 
     window.display();
     
@@ -39,12 +40,13 @@ int main() {
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            game.handleEvents(event);
+            gc.handleEvents(event);
         }
-        game.checkBombBlow();
+        gc.checkBombBlow();
         window.clear();
         window.draw(board.getSprite());
         board.draw(window);
+        player.draw(player.getCurrentDirection(), window);
         window.display();
     
     }
