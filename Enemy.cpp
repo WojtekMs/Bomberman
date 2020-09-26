@@ -7,7 +7,7 @@ Enemy::Enemy(Board& board, int col, int row) :Movable(board, col, row) {
 
 void Enemy::move(sf::Time elapsedTime) {
     totalElapsedTime += elapsedTime.asSeconds();
-    std::cout << Movable::getCol() << ", " << Movable::getRow() << '\n';
+    // std::cout << Movable::getCol() << ", " << Movable::getRow() << '\n';
     if (totalElapsedTime > 0.5) {
         switch(std::rand() % 4) {
             case 0:

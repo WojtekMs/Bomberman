@@ -43,9 +43,12 @@ int main() {
                 window.close();
             gc.handleEvents(event);
         }
-        gc.checkBombBlow();
         gc.moveEnemies();
         window.clear();
+        if(gc.checkBombBlow()) {
+            //draw boom
+        }
+        
         window.draw(board.getSprite());
         board.draw(window);
         if(player.isBombPlaced()) {

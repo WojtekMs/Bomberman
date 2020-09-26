@@ -9,7 +9,6 @@ class Board;
 
 class Player :public Movable {
     bool isBombPlaced_{false};
-    Direction currentDirection_{Direction::RIGHT};
     Bomb bomb_;
 
     sf::Texture textureLeft_;
@@ -30,7 +29,6 @@ class Player :public Movable {
     void placeBomb();
     bool isBombPlaced() const { return isBombPlaced_; }
 
-    Direction getCurrentDirection() const { return currentDirection_; }
     Bomb& getBomb()  { return bomb_; }
 
     void draw(Direction dir, sf::RenderWindow& win);

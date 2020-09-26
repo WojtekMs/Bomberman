@@ -20,6 +20,6 @@ class GameController {
     public:
     GameController(Board& b, Player& p, Enemy& e);
     void handleEvents(sf::Event& event);
-    void checkBombBlow();
+    bool checkBombBlow();
     void moveEnemies();
 };

@@ -11,6 +11,7 @@ void GameController::handleEvents(sf::Event& event) {
         }
         if (event.key.code == sf::Keyboard::A) {
             player_.moveLeft();
+            std::cout << int(player_.getCurrentDirection()) << '\n';
         }
         if (event.key.code == sf::Keyboard::S) {
             player_.moveDown();
@@ -31,17 +32,19 @@ void GameController::handleEvents(sf::Event& event) {
     }
 }
 
-void GameController::checkBombBlow() {
+bool GameController::checkBombBlow() {
     if (!player_.isBombPlaced()) {
-        return;
+        return false;
     }
     auto elapsedTime = bombClock_.getElapsedTime();
     player_.updateIsBombPlaced(elapsedTime);
     if (elapsedTime.asSeconds() >= player_.getBomb().getTimeToBlow()) {
 
-        std::cout << "BOOM!\n";
+        std::cout << "BOOM!\n"; //remove enemy
         isClockResetted_ = false;
+        return true;
     }
+    return false;
 
 }
 
