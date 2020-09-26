@@ -9,8 +9,6 @@ Enemy::Enemy(Board& board, int col, int row) : Movable(board, col, row) {
 
 void Enemy::move(sf::Time elapsedTime, Player& player) {
     totalElapsedTime += elapsedTime.asSeconds();
-    // std::cout << Movable::getCol() << ", " << Movable::getRow() << '\n';
-
     if (totalElapsedTime > 0.4) {
         if (Movable::getCol() > player.getCol()) {
             Movable::moveLeft();

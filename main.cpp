@@ -55,11 +55,9 @@ int main() {
             }
         }
         if(gc.getGameState() == GAME_STATE::LOST) {
-                std::cerr << "GAME OVER!\n";
-                exit(0);
+            std::cerr << "GAME OVER!\n";
+            exit(0);
         }
-
-        
         window.display();
     }
 

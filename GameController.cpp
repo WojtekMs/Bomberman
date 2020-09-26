@@ -25,9 +25,6 @@ void GameController::handleEvents(sf::Event& event) {
                 bombClock_ = sf::Clock();
                 isClockResetted_ = true;
             }
-            
-            //after 3 sekundy
-            //bum
         }
     }
 }
@@ -39,7 +36,6 @@ bool GameController::checkIfBombBlow() {
     auto elapsedTime = bombClock_.getElapsedTime();
     player_.updateIsBombPlaced(elapsedTime);
     if (elapsedTime.asSeconds() >= player_.getBomb().getTimeToBlow()) {
-        std::cout << "BOOM!\n";
         isClockResetted_ = false;
         return true;
     }
