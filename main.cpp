@@ -38,6 +38,7 @@ int main() {
     std::vector<Enemy*> vec{&enemy1, &enemy2, &enemy3, &enemy};
     GameController gc(board, player, vec);
     sf::Clock clock;
+    bool animationBegins = false;
     while (window.isOpen())
     {
         sf::Event event;
@@ -61,17 +62,23 @@ int main() {
         enemy3.draw(window);
         if(gc.checkIfBombBlow()) {
             gc.removeEnemies();
+            clock.restart();
+            animationBegins = true;
+            //draw boom
+        }
+        if (animationBegins) {
             player.drawExplosion(window);
-            if(gc.getGameState() == GAME_STATE::LOST) {
+            if (clock.getElapsedTime().asSeconds() > 0.7) {
+                animationBegins = false;
+            }
+        }
+        if(gc.getGameState() == GAME_STATE::LOST) {
                 std::cerr << "GAME OVER!\n";
                 exit(0);
             }
-            //draw boom
-        }
+
         
         window.display();
-        std::cout << player.getRow() << ' ' << player.getCol() << '\n';
-    
     }
 
     return 0;

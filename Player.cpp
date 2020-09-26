@@ -66,7 +66,10 @@ void Player::drawBomb(sf::RenderWindow& win) {
 
 void Player::drawExplosion(sf::RenderWindow& win) {
     spriteExplosionHorizontal_.setScale(0.65f, 0.65f);
-    spriteExplosionHorizontal_.setPosition((bomb_.getCol() - 2) * 32, bomb_.getRow() * 32);
+    spriteExplosionHorizontal_.setPosition((bomb_.getCol() - 2.5) * 32, bomb_.getRow() * 32);
+    spriteExplosionVertical_.setScale(0.65f, 0.65f);
+    spriteExplosionVertical_.setPosition(bomb_.getCol() * 32, (bomb_.getRow() - 2.5) * 32);
     win.draw(spriteExplosionHorizontal_);
+    win.draw(spriteExplosionVertical_);
     
 }

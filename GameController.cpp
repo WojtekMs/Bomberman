@@ -75,6 +75,12 @@ GAME_STATE GameController::getGameState() {
         if (player_.getRow() == bomb.getRow() && std::abs(player_.getCol() - bomb.getCol()) <= bomb.getFirePower()) {
             return GAME_STATE::LOST;
         }
+        if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](Enemy* enemy)
+        {
+            return enemy->getCol() == player_.getCol() && enemy->getRow() == player_.getRow();
+        })) {
+            return GAME_STATE::LOST;
+        }
 }
 
 
