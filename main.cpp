@@ -4,13 +4,11 @@
 #include <thread>
 
 #include "Board.hpp"
+#include "Enemy.hpp"
 #include "GameController.hpp"
 #include "Player.hpp"
-#include "GameController.hpp"
-#include "Enemy.hpp"
 
 int main() {
-    
     sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
     Board board(19, 25);
     Player player(board, 10, 10);
@@ -22,11 +20,9 @@ int main() {
     GameController gc(board, player, vec);
     sf::Clock clock;
     bool animationBegins = false;
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
             gc.handleEvents(event);
@@ -35,7 +31,7 @@ int main() {
         window.clear();
         window.draw(board.getSprite());
         board.draw(window);
-        if(player.isBombPlaced()) {
+        if (player.isBombPlaced()) {
             player.drawBomb(window);
         }
         player.draw(player.getCurrentDirection(), window);
@@ -43,7 +39,7 @@ int main() {
         enemy1.draw(window);
         enemy2.draw(window);
         enemy3.draw(window);
-        if(gc.checkIfBombBlow()) {
+        if (gc.checkIfBombBlow()) {
             gc.removeEnemies();
             clock.restart();
             animationBegins = true;
@@ -54,9 +50,16 @@ int main() {
                 animationBegins = false;
             }
         }
-        if(gc.getGameState() == GAME_STATE::LOST) {
+        if (gc.getGameState() == GAME_STATE::LOST) {
             std::cerr << "GAME OVER!\n";
-            exit(0);
+            sf::Texture gameover_;
+            if (!gameover_.loadFromFile("game_over.png")) {
+                std::cerr << "Error :CCCCCCCCCCC\n";
+            }
+            sf::Sprite sprite_;
+            sprite_.setTexture(gameover_);
+            window.draw(sprite_);
+            //exit(0);
         }
         window.display();
     }
