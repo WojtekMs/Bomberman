@@ -36,5 +36,9 @@ void Player::moveRight() {
 }
 
 void Player::placeBomb() {
-    
+    if (isBombPlaced_) {
+        return;
+    }
+    bomb_ = Bomb(col_, row_);
+    isBombPlaced_ = true;
 }

@@ -42,6 +42,7 @@ set(${CXX_STANDARD_REQUIRED} ON)
 set(SRC_LIST
   Board.cpp
   Player.cpp
+  Bomb.cpp
 )
 add_library(SRC ${SRC_LIST})
 add_executable(${PROJECT_NAME} main.cpp)
