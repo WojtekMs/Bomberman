@@ -55,6 +55,7 @@ int main() {
             player.drawBomb(window);
         }
         player.draw(player.getCurrentDirection(), window);
+        enemy.draw(window);
         window.display();
     
     }
