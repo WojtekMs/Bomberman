@@ -12,7 +12,6 @@ void GameController::handleEvents(sf::Event& event) {
         }
         if (event.key.code == sf::Keyboard::A) {
             player_.moveLeft();
-            std::cout << int(player_.getCurrentDirection()) << '\n';
         }
         if (event.key.code == sf::Keyboard::S) {
             player_.moveDown();
@@ -40,9 +39,7 @@ bool GameController::checkIfBombBlow() {
     auto elapsedTime = bombClock_.getElapsedTime();
     player_.updateIsBombPlaced(elapsedTime);
     if (elapsedTime.asSeconds() >= player_.getBomb().getTimeToBlow()) {
-
-        std::cout << "BOOM!\n"; //remove enemy
-      
+        std::cout << "BOOM!\n";
         isClockResetted_ = false;
         return true;
     }

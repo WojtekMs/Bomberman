@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include "Board.hpp"
 #include "GameController.hpp"
@@ -36,8 +37,7 @@ int main() {
     Enemy enemy3(board, 5, 8);
     std::vector<Enemy*> vec{&enemy1, &enemy2, &enemy3, &enemy};
     GameController gc(board, player, vec);
-    window.display();
-    
+    sf::Clock clock;
     while (window.isOpen())
     {
         sf::Event event;
@@ -49,15 +49,6 @@ int main() {
         }
         gc.moveEnemies();
         window.clear();
-        if(gc.checkIfBombBlow()) {
-            gc.removeEnemies();
-            if(gc.getGameState() == GAME_STATE::LOST) {
-                std::cerr << "GAME OVER!\n";
-                exit(0);
-            }
-            //draw boom
-        }
-        
         window.draw(board.getSprite());
         board.draw(window);
         if(player.isBombPlaced()) {
@@ -68,6 +59,16 @@ int main() {
         enemy1.draw(window);
         enemy2.draw(window);
         enemy3.draw(window);
+        if(gc.checkIfBombBlow()) {
+            gc.removeEnemies();
+            player.drawExplosion(window);
+            if(gc.getGameState() == GAME_STATE::LOST) {
+                std::cerr << "GAME OVER!\n";
+                exit(0);
+            }
+            //draw boom
+        }
+        
         window.display();
         std::cout << player.getRow() << ' ' << player.getCol() << '\n';
     

@@ -15,6 +15,14 @@ Player::Player(Board& board, int col, int row)
     spriteRight_.setTexture(textureRight_);
     textureBomb_.loadFromFile("img/bomb.png");
     spriteBomb_.setTexture(textureBomb_);
+    if(!textureExplosionHorizontal_.loadFromFile("img/boom_poziomo.png")) {
+        std::cerr << "error";
+        exit(0);
+    };
+    textureExplosionVertical_.loadFromFile("img/boom_pionowo.png");
+    spriteExplosionHorizontal_.setTexture(textureExplosionHorizontal_);
+    spriteExplosionVertical_.setTexture(textureExplosionVertical_);
+
 }
 
 void Player::placeBomb() {
@@ -54,4 +62,11 @@ void Player::drawBomb(sf::RenderWindow& win) {
     spriteBomb_.setScale(0.65f, 0.65f);
     spriteBomb_.setPosition(bomb_.getCol() * 32, bomb_.getRow() * 32);
     win.draw(spriteBomb_);
+}
+
+void Player::drawExplosion(sf::RenderWindow& win) {
+    spriteExplosionHorizontal_.setScale(0.65f, 0.65f);
+    spriteExplosionHorizontal_.setPosition((bomb_.getCol() - 2) * 32, bomb_.getRow() * 32);
+    win.draw(spriteExplosionHorizontal_);
+    
 }

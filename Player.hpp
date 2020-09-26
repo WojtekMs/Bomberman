@@ -22,7 +22,11 @@ class Player :public Movable {
     sf::Sprite spriteDown_;
 
     sf::Texture textureBomb_;
+    sf::Texture textureExplosionHorizontal_;
+    sf::Texture textureExplosionVertical_;
     sf::Sprite spriteBomb_;
+    sf::Sprite spriteExplosionHorizontal_;
+    sf::Sprite spriteExplosionVertical_;
 
     public:
     Player(Board& board, int col, int row);
@@ -34,4 +38,5 @@ class Player :public Movable {
     void draw(Direction dir, sf::RenderWindow& win);
     void updateIsBombPlaced(sf::Time elapsedTime);
     void drawBomb(sf::RenderWindow& win);
+    void drawExplosion(sf::RenderWindow& win);
 };
