@@ -5,6 +5,7 @@
 #include "Board.hpp"
 #include "GameController.hpp"
 #include "Player.hpp"
+#include "GameController.hpp"
 
 void displayBoard(Board& b, Player& p) {
     for (int row = 0; row < b.getHeight(); row++) {
@@ -41,6 +42,7 @@ int main() {
                 window.close();
             gc.handleEvents(event);
         }
+        game.checkBombBlow();
         window.clear();
         window.draw(board.getSprite());
         board.draw(window);

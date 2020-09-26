@@ -5,14 +5,14 @@
 
 Player::Player(Board& board, int col, int row)
     : board_(board), col_(col), row_(row) {
-        textureUp_.loadFromFile("img/playerUp.PNG");
-        spriteUp_.setTexture(textureUp_);
-        textureDown_.loadFromFile("img/playerDown.PNG");
-        spriteDown_.setTexture(textureDown_);
-        textureLeft_.loadFromFile("img/playerLeft.PNG");
-        spriteLeft_.setTexture(textureLeft_);
-        textureRight_.loadFromFile("img/playerRight.PNG");
-        spriteRight_.setTexture(textureRight_);
+    textureUp_.loadFromFile("img/playerUp.PNG");
+    spriteUp_.setTexture(textureUp_);
+    textureDown_.loadFromFile("img/playerDown.PNG");
+    spriteDown_.setTexture(textureDown_);
+    textureLeft_.loadFromFile("img/playerLeft.PNG");
+    spriteLeft_.setTexture(textureLeft_);
+    textureRight_.loadFromFile("img/playerRight.PNG");
+    spriteRight_.setTexture(textureRight_);
 }
 
 void Player::moveUp() {
@@ -60,18 +60,24 @@ void Player::placeBomb() {
 void Player::draw(Direction dir, sf::RenderWindow& win) {
     sf::Sprite* ptr = nullptr;
     switch (dir) {
-        case Direction::UP:
-            ptr = &spriteUp_;
-            break;
-        case Direction::DOWN:
-            ptr = &spriteDown_;
-            break;
-        case Direction::LEFT:
-            ptr = &spriteLeft_;
-            break;
-        case Direction::RIGHT:
-            ptr = &spriteRight_;
-            }
+    case Direction::UP:
+        ptr = &spriteUp_;
+        break;
+    case Direction::DOWN:
+        ptr = &spriteDown_;
+        break;
+    case Direction::LEFT:
+        ptr = &spriteLeft_;
+        break;
+    case Direction::RIGHT:
+        ptr = &spriteRight_;
+    }
     ptr->setPosition(col_ * 32, row_ * 32);
     win.draw(*ptr);
+}
+
+void Player::updateIsBombPlaced(sf::Time elapsedTime) {
+    if (elapsedTime.asSeconds() >= bomb_.getTimeToBlow()) {
+        isBombPlaced_ = false;
+    }
 }
