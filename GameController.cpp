@@ -1,7 +1,7 @@
 #include "GameController.hpp"
 #include <iostream>
 
-GameController::GameController(Board& board, Player& player, Enemy& enemy) : board_(board), player_(player), enemy_(enemy) {
+GameController::GameController(Board& board, Player& player, std::vector<Enemy*>& enemy) : board_(board), player_(player), enemies_(enemy) {
 }
 
 void GameController::handleEvents(sf::Event& event) {
@@ -49,5 +49,8 @@ bool GameController::checkBombBlow() {
 }
 
 void GameController::moveEnemies() {
-    enemy_.move(enemyMoveClock_.restart(), player_);
+    auto time = enemyMoveClock_.restart();
+    for (auto enemy : enemies_) {
+        enemy->move(time, player_);
+    }
 }
