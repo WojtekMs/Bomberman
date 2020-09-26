@@ -3,7 +3,7 @@
 #include <iostream>
 
 Enemy::Enemy(Board& board, int col, int row) : Movable(board, col, row) {
-    enemyTexture_.loadFromFile("monkey.png");
+    enemyTexture_.loadFromFile("img/monkey.png");
     enemySprite_.setTexture(enemyTexture_);
 }
 
