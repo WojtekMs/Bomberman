@@ -49,5 +49,5 @@ bool GameController::checkBombBlow() {
 }
 
 void GameController::moveEnemies() {
-    enemy_.move(enemyMoveClock_.restart());
+    enemy_.move(enemyMoveClock_.restart(), player_);
 }
