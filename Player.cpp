@@ -19,6 +19,8 @@ void Player::moveDown() {
         return;
     }
     row_++;
+        currentDirection_ = Direction::DOWN;
+
 }
 
 void Player::moveLeft() {
@@ -26,6 +28,7 @@ void Player::moveLeft() {
         return;
     }
     col_--;
+    currentDirection_ = Direction::LEFT;
 }
 
 void Player::moveRight() {

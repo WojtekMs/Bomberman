@@ -23,22 +23,9 @@ void displayBoard(Board& b, Player& p) {
 }
 
 int main() {
-    std::string dash(60, '-');
-    Board board(13, 11);
-    Player player(board, 7, 7);
-    displayBoard(board, player);
-    std::cout << dash << '\n';
-   player.moveRight();
-   player.moveRight();
-   player.moveRight();
-    displayBoard(board, player);
-    std::cout << dash << '\n';
-
-    // sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    // sf::CircleShape shape(100.f);
-    // shape.setFillColor(sf::Color::Green);
-
     
+    sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
+    Board board(19, 25);
 
     window.display();
     
