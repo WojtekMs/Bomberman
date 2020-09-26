@@ -12,7 +12,10 @@ enum class GAME_STATE {
 class GameController {
     Player& player_;
     Board& board_;
+    sf::Clock clock_;
+    bool isClockResetted_{false};
     public:
     GameController(Board& b, Player& p);
     void handleEvents(sf::Event& event);
+    void checkBombBlow();
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Bomb.hpp"
+#include <SFML/Graphics.hpp>
 
 class Board;
 
@@ -27,6 +28,8 @@ class Player {
     void placeBomb();
     int getCol() const { return col_; }
     int getRow() const { return row_; }
+    bool isBombPlaced() const { return isBombPlaced_; }
     Direction getCurrentDirection() const { return currentDirection_; }
     const Bomb& getBomb() const { return bomb_; }
+    void updateIsBombPlaced(sf::Time elapsedTime);
 };
