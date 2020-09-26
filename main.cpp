@@ -27,9 +27,6 @@ int main()
     
     sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
     Board board(19, 25);
-    //displayBoard(board);
-
-    
 
     window.display();
     
