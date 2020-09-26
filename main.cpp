@@ -42,7 +42,7 @@ int main() {
                 window.close();
             gc.handleEvents(event);
         }
-        game.checkBombBlow();
+        gc.checkBombBlow();
         window.clear();
         window.draw(board.getSprite());
         board.draw(window);
