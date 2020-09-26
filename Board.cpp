@@ -8,6 +8,8 @@ void Board::init(int height, int width) {
                 board_[row][col].isWall = true;
             } else if (row == 0 || row == height_ - 1) {
                 board_[row][col].isWall = true;
+            } else if (row % 2 == 0 && col % 2 == 0) {
+                board_[row][col].isWall = true;
             } else {
                 board_[row][col].isWall = false;
             }

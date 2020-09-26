@@ -28,7 +28,7 @@ int main() {
     
     sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
     Board board(19, 25);
-    Player player(board, 10, 10);
+    Player player(board, 11, 9);
     GameController gc(board, player);
 
     window.display();
@@ -51,6 +51,7 @@ int main() {
         }
         player.draw(player.getCurrentDirection(), window);
         window.display();
+        std::cout << player.getRow() << ' ' << player.getCol() << '\n';
     
     }
 
