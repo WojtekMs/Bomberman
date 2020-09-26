@@ -27,5 +27,6 @@ class Player {
     void placeBomb();
     int getCol() const { return col_; }
     int getRow() const { return row_; }
+    Direction getCurrentDirection() const { return currentDirection_; }
     const Bomb& getBomb() const { return bomb_; }
 };

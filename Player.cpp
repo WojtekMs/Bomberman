@@ -1,10 +1,7 @@
 #include "Player.hpp"
 #include "Board.hpp"
 
-Player::Player(Board& board, int col, int row)
-    : board_(board),
-      col_(col),
-      row_(row) {
+Player::Player(Board& board, int col, int row) : board_(board), col_(col), row_(row) {
 }
 
 void Player::moveUp() {
@@ -12,6 +9,7 @@ void Player::moveUp() {
         return;
     }
     row_--;
+    currentDirection_ = Direction::UP;
 }
 
 void Player::moveDown() {
@@ -19,8 +17,7 @@ void Player::moveDown() {
         return;
     }
     row_++;
-        currentDirection_ = Direction::DOWN;
-
+    currentDirection_ = Direction::DOWN;
 }
 
 void Player::moveLeft() {
@@ -36,6 +33,7 @@ void Player::moveRight() {
         return;
     }
     col_++;
+    currentDirection_ = Direction::RIGHT;
 }
 
 void Player::placeBomb() {
