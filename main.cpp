@@ -31,6 +31,9 @@ int main() {
     Board board(19, 25);
     Player player(board, 10, 10);
     Enemy enemy(board, 8, 8);
+    Enemy enemy1(board, 1, 8);
+    Enemy enemy2(board, 8, 1);
+    Enemy enemy3(board, 3, 5);
     GameController gc(board, player, enemy);
     window.display();
     
@@ -56,6 +59,9 @@ int main() {
         }
         player.draw(player.getCurrentDirection(), window);
         enemy.draw(window);
+        enemy1.draw(window);
+        enemy2.draw(window);
+        enemy3.draw(window);
         window.display();
         std::cout << player.getRow() << ' ' << player.getCol() << '\n';
     
