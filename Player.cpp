@@ -43,3 +43,9 @@ void Player::placeBomb() {
     bomb_ = Bomb(col_, row_);
     isBombPlaced_ = true;
 }
+
+void Player::updateIsBombPlaced(sf::Time elapsedTime) {
+    if (elapsedTime.asSeconds() >= bomb_.getTimeToBlow()) {
+        isBombPlaced_ = false;
+    }
+}
