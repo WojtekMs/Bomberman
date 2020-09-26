@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Bomb.hpp"
-#include <SFML/Graphics.hpp>
+#include "Movable.hpp"
 
 class Board;
 
@@ -12,7 +12,7 @@ enum class Direction {
     DOWN,
     RIGHT
 };
-class Player {
+class Player :public Movable {
     int col_{5};
     int row_{5};
     Board& board_;
@@ -32,10 +32,10 @@ class Player {
 
     public:
     Player(Board& board, int col, int row);
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
+    void moveUp() override;
+    void moveDown() override;
+    void moveLeft() override;
+    void moveRight() override;
     void placeBomb();
     int getCol() const { return col_; }
     int getRow() const { return row_; }

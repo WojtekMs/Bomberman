@@ -38,6 +38,7 @@ void GameController::checkBombBlow() {
     auto elapsedTime = clock_.getElapsedTime();
     player_.updateIsBombPlaced(elapsedTime);
     if (elapsedTime.asSeconds() >= player_.getBomb().getTimeToBlow()) {
+        
         std::cout << "BOOM!\n";
         isClockResetted_ = false;
     }
