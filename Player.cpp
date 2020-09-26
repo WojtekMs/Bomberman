@@ -85,6 +85,7 @@ void Player::updateIsBombPlaced(sf::Time elapsedTime) {
 }
 
 void Player::drawBomb(sf::RenderWindow& win) {
+    spriteBomb_.setScale(0.75f, 0.75f);
     spriteBomb_.setPosition(bomb_.getCol() * 32, bomb_.getRow() * 32);
     win.draw(spriteBomb_);
 }
