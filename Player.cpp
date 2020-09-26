@@ -4,7 +4,7 @@
 #include <iostream>
 
 Player::Player(Board& board, int col, int row)
-    : board_(board), col_(col), row_(row) {
+    : Movable(board, col, row) {
     textureUp_.loadFromFile("img/playerUp.PNG");
     spriteUp_.setTexture(textureUp_);
     textureDown_.loadFromFile("img/playerDown.PNG");
@@ -15,45 +15,11 @@ Player::Player(Board& board, int col, int row)
     spriteRight_.setTexture(textureRight_);
 }
 
-void Player::moveUp() {
-    if (board_.getField(col_, row_ - 1).isWall) {
-        return;
-    }
-    row_--;
-    currentDirection_ = Direction::UP;
-}
-
-void Player::moveDown() {
-    std::cout << row_ << '\n';
-    if (board_.getField(col_, row_ + 1).isWall) {
-        return;
-    }
-    row_++;
-    currentDirection_ = Direction::DOWN;
-}
-
-void Player::moveLeft() {
-    if (board_.getField(col_ - 1, row_).isWall) {
-        return;
-    }
-    col_--;
-    currentDirection_ = Direction::LEFT;
-}
-
-void Player::moveRight() {
-    std::cout << col_ << '\n';
-    if (board_.getField(col_ + 1, row_).isWall) {
-        return;
-    }
-    col_++;
-    currentDirection_ = Direction::RIGHT;
-}
-
 void Player::placeBomb() {
     if (isBombPlaced_) {
         return;
     }
-    bomb_ = Bomb(col_, row_);
+    bomb_ = Bomb(Movable::getCol(), Movable::getRow());
     isBombPlaced_ = true;
 }
 
@@ -72,7 +38,7 @@ void Player::draw(Direction dir, sf::RenderWindow& win) {
     case Direction::RIGHT:
         ptr = &spriteRight_;
     }
-    ptr->setPosition(col_ * 32, row_ * 32);
+    ptr->setPosition(Movable::getCol() * 32, Movable::getRow() * 32);
     win.draw(*ptr);
 }
 

@@ -1,7 +1,7 @@
 #include "GameController.hpp"
 #include <iostream>
 
-GameController::GameController(Board& board, Player& player) : board_(board), player_(player) {
+GameController::GameController(Board& board, Player& player, Enemy& enemy) : board_(board), player_(player), enemy_(enemy) {
 }
 
 void GameController::handleEvents(sf::Event& event) {
@@ -21,7 +21,7 @@ void GameController::handleEvents(sf::Event& event) {
         if (event.key.code == sf::Keyboard::Space) {
             player_.placeBomb();
             if (!isClockResetted_) {
-                clock_ = sf::Clock();
+                bombClock_ = sf::Clock();
                 isClockResetted_ = true;
             }
             
@@ -35,12 +35,16 @@ void GameController::checkBombBlow() {
     if (!player_.isBombPlaced()) {
         return;
     }
-    auto elapsedTime = clock_.getElapsedTime();
+    auto elapsedTime = bombClock_.getElapsedTime();
     player_.updateIsBombPlaced(elapsedTime);
     if (elapsedTime.asSeconds() >= player_.getBomb().getTimeToBlow()) {
-        
+
         std::cout << "BOOM!\n";
         isClockResetted_ = false;
     }
 
+}
+
+void GameController::moveEnemies() {
+    enemy_.move(enemyMoveClock_.restart());
 }

@@ -6,6 +6,7 @@
 #include "GameController.hpp"
 #include "Player.hpp"
 #include "GameController.hpp"
+#include "Enemy.hpp"
 
 void displayBoard(Board& b, Player& p) {
     for (int row = 0; row < b.getHeight(); row++) {
@@ -29,8 +30,8 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
     Board board(19, 25);
     Player player(board, 10, 10);
-    GameController gc(board, player);
-
+    Enemy enemy(board, 8, 8);
+    GameController gc(board, player, enemy);
     window.display();
     
     while (window.isOpen())
@@ -43,6 +44,7 @@ int main() {
             gc.handleEvents(event);
         }
         gc.checkBombBlow();
+        gc.moveEnemies();
         window.clear();
         window.draw(board.getSprite());
         board.draw(window);
