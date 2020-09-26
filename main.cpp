@@ -9,23 +9,6 @@
 #include "GameController.hpp"
 #include "Enemy.hpp"
 
-void displayBoard(Board& b, Player& p) {
-    for (int row = 0; row < b.getHeight(); row++) {
-        for (int col = 0; col < b.getWidth(); col++) {
-            std::cout << "[ ";
-            if (b.getField(col, row).isWall) {
-                std::cout << "W";
-            } else if (p.getCol() == col && p.getRow() == row) {
-                std::cout << "P";
-            } else {
-                std::cout << " ";
-            }
-            std::cout << " ]";
-        }
-        std::cout << '\n';
-    }
-}
-
 int main() {
     
     sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
@@ -64,7 +47,6 @@ int main() {
             gc.removeEnemies();
             clock.restart();
             animationBegins = true;
-            //draw boom
         }
         if (animationBegins) {
             player.drawExplosion(window);
@@ -75,7 +57,7 @@ int main() {
         if(gc.getGameState() == GAME_STATE::LOST) {
                 std::cerr << "GAME OVER!\n";
                 exit(0);
-            }
+        }
 
         
         window.display();

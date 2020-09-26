@@ -24,5 +24,6 @@ class GameController {
     bool checkIfBombBlow();
     void moveEnemies();
     void removeEnemies();
+    bool playerIsInBombRange();
     GAME_STATE getGameState();
 };

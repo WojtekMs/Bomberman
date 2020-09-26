@@ -67,23 +67,27 @@ void GameController::removeEnemies() {
 }
 
 GAME_STATE GameController::getGameState() {
-        auto bomb =  player_.getBomb();
-
-        if (player_.getCol() == bomb.getCol() && std::abs(player_.getRow() - bomb.getRow()) <= bomb.getFirePower()) {
-            return GAME_STATE::LOST;
-        }
-        if (player_.getRow() == bomb.getRow() && std::abs(player_.getCol() - bomb.getCol()) <= bomb.getFirePower()) {
-            return GAME_STATE::LOST;
-        }
-        if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](Enemy* enemy)
-        {
-            return enemy->getCol() == player_.getCol() && enemy->getRow() == player_.getRow();
-        })) {
-            return GAME_STATE::LOST;
-        }
+    if (checkIfBombBlow() && playerIsInBombRange()) {
+        return GAME_STATE::LOST;
+    }
+    if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](Enemy* enemy)
+    {
+        return enemy->getCol() == player_.getCol() && enemy->getRow() == player_.getRow();
+    })) {
+        return GAME_STATE::LOST;
+    }
 }
 
-
+bool GameController::playerIsInBombRange() {
+    auto bomb =  player_.getBomb();
+    if (player_.getCol() == bomb.getCol() && std::abs(player_.getRow() - bomb.getRow()) <= bomb.getFirePower()) {
+        return true;
+    }
+    if (player_.getRow() == bomb.getRow() && std::abs(player_.getCol() - bomb.getCol()) <= bomb.getFirePower()) {
+        return true;
+    }
+    return false;
+}
 
 void GameController::moveEnemies() {
     auto time = enemyMoveClock_.restart();
