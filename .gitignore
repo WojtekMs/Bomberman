@@ -1,3 +1,6 @@
 build/
 *.o
 sfml-app
+Board.o
+main.o
+sfml-app
