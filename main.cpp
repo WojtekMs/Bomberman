@@ -49,7 +49,12 @@ int main() {
         }
         gc.moveEnemies();
         window.clear();
-        if(gc.checkBombBlow()) {
+        if(gc.checkIfBombBlow()) {
+            gc.removeEnemies();
+            if(gc.getGameState() == GAME_STATE::LOST) {
+                std::cerr << "GAME OVER!\n";
+                exit(0);
+            }
             //draw boom
         }
         

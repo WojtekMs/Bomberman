@@ -21,6 +21,8 @@ class GameController {
     public:
     GameController(Board& b, Player& p, std::vector<Enemy*>& e);
     void handleEvents(sf::Event& event);
-    bool checkBombBlow();
+    bool checkIfBombBlow();
     void moveEnemies();
+    void removeEnemies();
+    GAME_STATE getGameState();
 };

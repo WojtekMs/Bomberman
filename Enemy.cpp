@@ -27,18 +27,14 @@ void Enemy::move(sf::Time elapsedTime, Player& player) {
         switch(std::rand() % 4) {
             case 0:
             Movable::moveRight();
-            Movable::moveRight();
             break;
             case 1:
-            Movable::moveUp();
             Movable::moveUp();
             break;
             case 2:
             Movable::moveDown();
-            Movable::moveDown();
             break;
             case 3:
-            Movable::moveLeft();
             Movable::moveLeft();
             break;
         }
@@ -49,4 +45,9 @@ void Enemy::move(sf::Time elapsedTime, Player& player) {
 void Enemy::draw(sf::RenderWindow& win) {
     enemySprite_.setPosition(Movable::getCol() * 32, Movable::getRow() * 32);
     win.draw(enemySprite_);
+}
+
+void Enemy::setPosition(int col, int row) {
+    col_ = col;
+    row_ = row;
 }

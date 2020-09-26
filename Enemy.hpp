@@ -10,5 +10,6 @@ class Enemy :public Movable {
     Enemy(Board& board, int col, int row);
     void move(sf::Time elapsedTime, Player& player);
     void draw(sf::RenderWindow& win);
+    void setPosition(int col, int row);
 
 };

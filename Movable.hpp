@@ -4,6 +4,7 @@
 
 enum class Direction { LEFT, UP, DOWN, RIGHT };
 class Movable {
+    protected:
     int col_{5};
     int row_{5};
     Board& board_;
