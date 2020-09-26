@@ -13,12 +13,13 @@ enum class GAME_STATE {
 class GameController {
     Player& player_;
     Board& board_;
-    Enemy& enemy_;
+    std::vector<Enemy*> enemies_;
+    // Enemy& enemy_;
     sf::Clock bombClock_;
     sf::Clock enemyMoveClock_;
     bool isClockResetted_{false};
     public:
-    GameController(Board& b, Player& p, Enemy& e);
+    GameController(Board& b, Player& p, std::vector<Enemy*>& e);
     void handleEvents(sf::Event& event);
     bool checkBombBlow();
     void moveEnemies();

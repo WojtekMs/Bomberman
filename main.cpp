@@ -31,10 +31,11 @@ int main() {
     Board board(19, 25);
     Player player(board, 10, 10);
     Enemy enemy(board, 8, 8);
-    Enemy enemy1(board, 1, 8);
-    Enemy enemy2(board, 8, 1);
-    Enemy enemy3(board, 3, 5);
-    GameController gc(board, player, enemy);
+    Enemy enemy1(board, 7, 6);
+    Enemy enemy2(board, 6, 3);
+    Enemy enemy3(board, 5, 8);
+    std::vector<Enemy*> vec{&enemy1, &enemy2, &enemy3, &enemy};
+    GameController gc(board, player, vec);
     window.display();
     
     while (window.isOpen())
