@@ -40,15 +40,22 @@ set(${CXX_STANDARD_REQUIRED} ON)
 # Now simply link against gtest or gtest_main as needed. Eg
 
 set(SRC_LIST
-  Board.cpp
-  Player.cpp
-  Bomb.cpp
+  src/Board.cpp
+  src/Player.cpp
+  src/Bomb.cpp
+  src/Enemy.cpp 
+  src/GameController.cpp
+  src/Movable.cpp
 )
+
+include_directories(${CMAKE_SOURCE_DIR}/inc)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 add_library(SRC ${SRC_LIST})
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp)
 add_executable(${PROJECT_NAME}-ut tests/test.cpp)
 target_link_libraries(${PROJECT_NAME}-ut gtest_main SRC)
 target_link_libraries(${PROJECT_NAME} SRC)
+
 enable_testing()
 add_test(NAME bomberman_test COMMAND ${PROJECT_NAME}-ut)
 

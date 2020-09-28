@@ -5,8 +5,8 @@
 
 #include "Board.hpp"
 #include "GameController.hpp"
-#include "Player.hpp"
 #include "GameController.hpp"
+#include "Player.hpp"
 #include "Enemy.hpp"
 
 int main() {
