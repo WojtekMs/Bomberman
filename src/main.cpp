@@ -19,46 +19,48 @@ int main() {
     GameController gc(board, player, vec);
     sf::Clock clock;
     bool animationBegins = false;
+    sf::Texture gameover_;
+    if (!gameover_.loadFromFile("img/game_over.png")) {
+        std::cerr << "Error :CCCCCCCCCCC\n";
+    }
+    sf::Sprite sprite_;
+    sprite_.setTexture(gameover_);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
+            }
             gc.handleEvents(event);
         }
         gc.moveEnemies();
+        gc.updateGameState();
         window.clear();
-        window.draw(board.getSprite());
-        board.draw(window);
-        if (player.isBombPlaced()) {
-            player.drawBomb(window);
-        }
-        player.draw(player.getCurrentDirection(), window);
-        enemy.draw(window);
-        enemy1.draw(window);
-        enemy2.draw(window);
-        enemy3.draw(window);
-        if (gc.checkIfBombBlow()) {
-            gc.removeEnemies();
-            clock.restart();
-            animationBegins = true;
-        }
-        if (animationBegins) {
-            player.drawExplosion(window);
-            if (clock.getElapsedTime().asSeconds() > 0.7) {
-                animationBegins = false;
+        if (gc.getGameState() != GAME_STATE::LOST) {
+            window.draw(board.getSprite());
+            board.draw(window);
+            if (player.isBombPlaced()) {
+                player.drawBomb(window);
             }
-        }
-        if (gc.getGameState() == GAME_STATE::LOST) {
-            std::cerr << "GAME OVER!\n";
-            sf::Texture gameover_;
-            if (!gameover_.loadFromFile("game_over.png")) {
-                std::cerr << "Error :CCCCCCCCCCC\n";
+            player.draw(player.getCurrentDirection(), window);
+            enemy.draw(window);
+            enemy1.draw(window);
+            enemy2.draw(window);
+            enemy3.draw(window);
+            if (gc.checkIfBombBlow()) {
+                gc.removeEnemies();
+                clock.restart();
+                animationBegins = true;
             }
-            sf::Sprite sprite_;
-            sprite_.setTexture(gameover_);
+            if (animationBegins) {
+                player.drawExplosion(window);
+                if (clock.getElapsedTime().asSeconds() > 0.7) {
+                    animationBegins = false;
+                }
+            }
+        } else {
             window.draw(sprite_);
-            //exit(0);
         }
         window.display();
     }

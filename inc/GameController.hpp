@@ -7,7 +7,8 @@
 
 enum class GAME_STATE {
     WON,
-    LOST
+    LOST,
+    IN_PROGRESS,
 };
 
 class GameController {
@@ -18,6 +19,7 @@ class GameController {
     sf::Clock bombClock_;
     sf::Clock enemyMoveClock_;
     bool isClockResetted_{false};
+    GAME_STATE currentGameState{GAME_STATE::IN_PROGRESS};
     public:
     GameController(Board& b, Player& p, std::vector<Enemy*>& e);
     void handleEvents(sf::Event& event);
@@ -25,5 +27,6 @@ class GameController {
     void moveEnemies();
     void removeEnemies();
     bool playerIsInBombRange();
-    GAME_STATE getGameState();
+    void updateGameState();
+    GAME_STATE getGameState() { return currentGameState; }
 };

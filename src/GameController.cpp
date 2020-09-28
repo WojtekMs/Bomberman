@@ -1,8 +1,11 @@
 #include "GameController.hpp"
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
-GameController::GameController(Board& board, Player& player, std::vector<Enemy*>& enemy) : board_(board), player_(player), enemies_(enemy) {
+GameController::GameController(Board& board, Player& player, std::vector<Enemy*>& enemy) :
+    board_(board),
+    player_(player),
+    enemies_(enemy) {
 }
 
 void GameController::handleEvents(sf::Event& event) {
@@ -40,42 +43,38 @@ bool GameController::checkIfBombBlow() {
         return true;
     }
     return false;
-
 }
 
 void GameController::removeEnemies() {
-        auto bomb =  player_.getBomb();
+    auto bomb = player_.getBomb();
 
-          for (auto enemy : enemies_) {
-            if (enemy->getRow() == bomb.getRow()) {
-                if(std::abs(enemy->getCol() - bomb.getCol()) <= bomb.getFirePower()) {
-                    enemy->setPosition(-1, -1);
-                }
-            }
-            if (enemy->getCol() == bomb.getCol()) {
-                if(std::abs(enemy->getRow() - bomb.getRow()) <= bomb.getFirePower()) {
-                    enemy->setPosition(-1, -1);
-                }
+    for (auto enemy : enemies_) {
+        if (enemy->getRow() == bomb.getRow()) {
+            if (std::abs(enemy->getCol() - bomb.getCol()) <= bomb.getFirePower()) {
+                enemy->setPosition(-1, -1);
             }
         }
-
-    
+        if (enemy->getCol() == bomb.getCol()) {
+            if (std::abs(enemy->getRow() - bomb.getRow()) <= bomb.getFirePower()) {
+                enemy->setPosition(-1, -1);
+            }
+        }
+    }
 }
 
-GAME_STATE GameController::getGameState() {
+void GameController::updateGameState() {
     if (checkIfBombBlow() && playerIsInBombRange()) {
-        return GAME_STATE::LOST;
+        currentGameState = GAME_STATE::LOST;
     }
-    if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](Enemy* enemy)
-    {
-        return enemy->getCol() == player_.getCol() && enemy->getRow() == player_.getRow();
-    })) {
-        return GAME_STATE::LOST;
+    if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](Enemy* enemy) {
+            return enemy->getCol() == player_.getCol() && enemy->getRow() == player_.getRow();
+        })) {
+        currentGameState = GAME_STATE::LOST;
     }
 }
 
 bool GameController::playerIsInBombRange() {
-    auto bomb =  player_.getBomb();
+    auto bomb = player_.getBomb();
     if (player_.getCol() == bomb.getCol() && std::abs(player_.getRow() - bomb.getRow()) <= bomb.getFirePower()) {
         return true;
     }
