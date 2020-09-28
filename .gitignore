@@ -1,3 +1,4 @@
+.vscode
 build/
-*.o
-sfml-app
+Bomberman
+Bomberman-ut
