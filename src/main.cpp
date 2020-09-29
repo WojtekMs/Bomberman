@@ -1,6 +1,7 @@
 #include "Board.hpp"
 #include "Enemy.hpp"
 #include "GameController.hpp"
+#include "GameView.hpp"
 #include "Player.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -18,16 +19,7 @@ int main()
     Enemy enemy3(board, 5, 8);
     std::vector<Enemy*> vec{&enemy1, &enemy2, &enemy3, &enemy};
     GameController gc(board, player, vec);
-    sf::Clock clock;
-    bool clockReseted = false;
-    bool animationBegins = true;
-    sf::Texture gameover_;
-    if (!gameover_.loadFromFile("img/game_over.png")) {
-        std::cerr << "Error :CCCCCCCCCCC\n";
-    }
-    sf::Sprite gameOverSprite_;
-    gameOverSprite_.setTexture(gameover_);
-
+    GameView gv(board, player, vec);
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -39,22 +31,19 @@ int main()
         gc.updateGame();
         window.clear();
         if (gc.getGameState() == GAME_STATE::LOST) {
-            window.draw(gameOverSprite_);
+            gv.drawGameOver(window);
             window.display();
             continue;
         }
-        board.draw(window);
+        gv.drawBoard(window);
         if (gc.isBombPlaced()) {
-            player.drawBomb(window);
+            gv.drawBomb(window);
         }
-        player.draw(player.getCurrentDirection(), window);
-        enemy.draw(window);
-        enemy1.draw(window);
-        enemy2.draw(window);
-        enemy3.draw(window);
+        gv.drawPlayer(window);
+        gv.drawEnemies(window);
         if (gc.isExplosion()) {
             gc.removeEnemies();
-            player.drawExplosion(window);
+            gv.drawExplosion(window);
         }
         window.display();
     }

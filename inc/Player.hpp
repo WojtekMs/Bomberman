@@ -8,7 +8,6 @@ class Board;
 
 
 class Player :public Movable {
-    // bool isBombPlaced_{false};
     Bomb bomb_;
 
     sf::Texture textureLeft_;
@@ -31,12 +30,11 @@ class Player :public Movable {
     public:
     Player(Board& board, int col, int row);
     void placeBomb();
-    // bool isBombPlaced() const { return isBombPlaced_; }
-
     Bomb& getBomb()  { return bomb_; }
-
+    sf::Sprite& getBombSprite() { return spriteBomb_; }
+    sf::Sprite& getPlayerSprite();
+    sf::Sprite& getExplosionSprite();
     void draw(Direction dir, sf::RenderWindow& win);
-    // void updateIsBombPlaced(sf::Time elapsedTime);
     void drawBomb(sf::RenderWindow& win);
     void drawExplosion(sf::RenderWindow& win);
 };

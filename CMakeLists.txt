@@ -46,6 +46,7 @@ set(SRC_LIST
   src/Enemy.cpp 
   src/GameController.cpp
   src/Movable.cpp
+  src/GameView.cpp
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/inc)

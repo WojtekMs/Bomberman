@@ -31,11 +31,11 @@ Board::Board(int height, int width)
     wall_.setTexture(texture_wall);
 }
 
-sf::Sprite Board::getSprite() const {
+sf::Sprite& Board::getMapSprite() {
     return map_;
 }
 
-sf::Sprite Board::getWall() const {
+sf::Sprite& Board::getWallSprite() {
     return wall_;
 }
 

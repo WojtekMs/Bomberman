@@ -1,10 +1,11 @@
 #include "Player.hpp"
+
 #include "Board.hpp"
 
 #include <iostream>
 
-Player::Player(Board& board, int col, int row)
-    : Movable(board, col, row), bomb_(3, 3) {
+Player::Player(Board& board, int col, int row) : Movable(board, col, row)
+{
     textureUp_.loadFromFile("img/playerUp.PNG");
     spriteUp_.setTexture(textureUp_);
     textureDown_.loadFromFile("img/playerDown.PNG");
@@ -15,34 +16,52 @@ Player::Player(Board& board, int col, int row)
     spriteRight_.setTexture(textureRight_);
     textureBomb_.loadFromFile("img/bomb.png");
     spriteBomb_.setTexture(textureBomb_);
-    if(!textureExplosionHorizontal_.loadFromFile("img/boom_poziomo.png")) {
+    if (!textureExplosionHorizontal_.loadFromFile("img/boom_poziomo.png")) {
         std::cerr << "error";
-        exit(0);
+        // exit(0);
     };
     textureExplosionVertical_.loadFromFile("img/boom_pionowo.png");
     spriteExplosionHorizontal_.setTexture(textureExplosionHorizontal_);
     spriteExplosionVertical_.setTexture(textureExplosionVertical_);
-
 }
 
-void Player::placeBomb() {
+sf::Sprite& Player::getPlayerSprite()
+{
+    switch (Movable::getCurrentDirection()) {
+        case Direction::UP:
+            return spriteUp_;
+            break;
+        case Direction::DOWN:
+            return spriteDown_;
+            break;
+        case Direction::LEFT:
+            return spriteLeft_;
+            break;
+        case Direction::RIGHT:
+            return spriteRight_;
+    }
+}
+
+void Player::placeBomb()
+{
     bomb_ = Bomb(Movable::getCol(), Movable::getRow());
 }
 
-void Player::draw(Direction dir, sf::RenderWindow& win) {
+void Player::draw(Direction dir, sf::RenderWindow& win)
+{
     sf::Sprite* ptr = nullptr;
     switch (dir) {
-    case Direction::UP:
-        ptr = &spriteUp_;
-        break;
-    case Direction::DOWN:
-        ptr = &spriteDown_;
-        break;
-    case Direction::LEFT:
-        ptr = &spriteLeft_;
-        break;
-    case Direction::RIGHT:
-        ptr = &spriteRight_;
+        case Direction::UP:
+            ptr = &spriteUp_;
+            break;
+        case Direction::DOWN:
+            ptr = &spriteDown_;
+            break;
+        case Direction::LEFT:
+            ptr = &spriteLeft_;
+            break;
+        case Direction::RIGHT:
+            ptr = &spriteRight_;
     }
     ptr->setScale(0.65f, 0.65f);
     ptr->setPosition(Movable::getCol() * 32, Movable::getRow() * 32);
@@ -55,18 +74,19 @@ void Player::draw(Direction dir, sf::RenderWindow& win) {
 //     }
 // }
 
-void Player::drawBomb(sf::RenderWindow& win) {
+void Player::drawBomb(sf::RenderWindow& win)
+{
     spriteBomb_.setScale(0.65f, 0.65f);
     spriteBomb_.setPosition(bomb_.getCol() * 32, bomb_.getRow() * 32);
     win.draw(spriteBomb_);
 }
 
-void Player::drawExplosion(sf::RenderWindow& win) {
+void Player::drawExplosion(sf::RenderWindow& win)
+{
     spriteExplosionHorizontal_.setScale(0.65f, 0.65f);
     spriteExplosionHorizontal_.setPosition((bomb_.getCol() - 2.5) * 32, bomb_.getRow() * 32);
     spriteExplosionVertical_.setScale(0.65f, 0.65f);
     spriteExplosionVertical_.setPosition(bomb_.getCol() * 32, (bomb_.getRow() - 2.5) * 32);
     win.draw(spriteExplosionHorizontal_);
     win.draw(spriteExplosionVertical_);
-    
 }

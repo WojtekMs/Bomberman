@@ -6,6 +6,7 @@ GameController::GameController(Board& board, Player& player, std::vector<Enemy*>
     board_(board),
     player_(player),
     enemies_(enemy) {
+
 }
 
 void GameController::handleEvents(sf::Event& event) {

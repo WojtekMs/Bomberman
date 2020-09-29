@@ -11,5 +11,6 @@ class Enemy :public Movable {
     void move(sf::Time elapsedTime, Player& player);
     void draw(sf::RenderWindow& win);
     void setPosition(int col, int row);
+    sf::Sprite& getSprite() { return enemySprite_; }
 
 };

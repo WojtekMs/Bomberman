@@ -23,8 +23,8 @@ public:
     int getHeight() { return height_; }
     int getWidth() { return width_; }
     Field getField(int col, int row) { return board_[row][col]; }
-    sf::Sprite getSprite() const;
-    sf::Sprite getWall() const;
+    sf::Sprite& getMapSprite();
+    sf::Sprite& getWallSprite();
 
     void draw(sf::RenderWindow& win);
 
