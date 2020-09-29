@@ -8,11 +8,11 @@ class Bomb {
     int timeToBlow_{3};
 
     public:
+    Bomb() = default;
     Bomb(int col, int row);
     int getCol() const { return col_; }
     int getRow() const { return row_; }
     int getFirePower() const { return firePower_; }
     int getTimeToBlow() const { return timeToBlow_; }
-    void blow();
     
 };

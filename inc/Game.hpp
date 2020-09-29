@@ -1,12 +1,25 @@
 #pragma once
 
+#include <memory>
+#include <vector>
+#include <SFML/Graphics.hpp>
+
+#include "Board.hpp"
+#include "Enemy.hpp"
 #include "GameController.hpp"
 #include "GameView.hpp"
+#include "Player.hpp"
 
-class Game {
-    GameController& ctrl_;
+class Game
+{
+    Board board_;
+    Player player_;
+    std::vector<std::shared_ptr<Enemy>> enemies_;
+    GameController ctrl_;
     GameView view_;
-    public:
-    Game(GameController& gc, GameView& gv);
-    //should have draw function and handleEvents function
+    sf::RenderWindow window_;
+
+   public:
+    Game();
+    void run();
 };

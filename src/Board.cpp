@@ -1,5 +1,4 @@
 #include "Board.hpp"
-#include <iostream>
 
 void Board::init(int height, int width) {
     for (int row = 0; row < height_; ++row) {
@@ -20,33 +19,4 @@ void Board::init(int height, int width) {
 Board::Board(int height, int width)
 :height_(height), width_(width) {
     init(height_, width_);
-    if (!texture_map.loadFromFile("img/map.png")) {
-        std::cerr << "Error :CCCCCCCCCCC\n";
-    }
-    map_.setTexture(texture_map);
-
-    if (!texture_wall.loadFromFile("img/wall.png")) {
-        std::cerr << "Error :CCCCCCCCCCC\n";
-    }
-    wall_.setTexture(texture_wall);
-}
-
-sf::Sprite Board::getSprite() const {
-    return map_;
-}
-
-sf::Sprite Board::getWall() const {
-    return wall_;
-}
-
-void Board::draw(sf::RenderWindow& win) {
-    for (int row = 0; row < height_; ++row) {
-        for (int col = 0; col < width_; ++col) {
-            if(board_[row][col].isWall) {
-                wall_.setScale(0.5f, 0.5f);
-                wall_.setPosition(col * 32, row * 32);
-                win.draw(wall_);
-            }
-        }
-    }
 }

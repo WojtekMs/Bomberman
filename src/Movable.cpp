@@ -1,9 +1,12 @@
 #include "Movable.hpp"
 
-Movable::Movable(Board& board, int col, int row, Direction dir) : board_(board), col_(col), row_(row), currentDirection_(dir) {
+Movable::Movable(Board& board, int col, int row, Direction dir) :
+    board_(board), col_(col), row_(row), currentDirection_(dir)
+{
 }
 
-void Movable::moveUp() {
+void Movable::moveUp()
+{
     if (board_.getField(col_, row_ - 1).isWall) {
         return;
     }
@@ -11,7 +14,8 @@ void Movable::moveUp() {
     currentDirection_ = Direction::UP;
 }
 
-void Movable::moveDown() {
+void Movable::moveDown()
+{
     if (board_.getField(col_, row_ + 1).isWall) {
         return;
     }
@@ -19,7 +23,8 @@ void Movable::moveDown() {
     currentDirection_ = Direction::DOWN;
 }
 
-void Movable::moveLeft() {
+void Movable::moveLeft()
+{
     if (board_.getField(col_ - 1, row_).isWall) {
         return;
     }
@@ -27,7 +32,8 @@ void Movable::moveLeft() {
     currentDirection_ = Direction::LEFT;
 }
 
-void Movable::moveRight() {
+void Movable::moveRight()
+{
     if (board_.getField(col_ + 1, row_).isWall) {
         return;
     }
