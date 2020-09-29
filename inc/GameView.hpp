@@ -11,7 +11,7 @@ class GameView {
     Player& player_;
     std::vector<Enemy*> enemies_;
 
-    std::string pathToTextures;
+    std::string pathToTextures{"../img/"};
 
     sf::Texture textureMap_;
     sf::Texture textureWall_;

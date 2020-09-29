@@ -51,7 +51,6 @@ set(SRC_LIST
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/inc)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 add_library(SRC ${SRC_LIST})
 add_executable(${PROJECT_NAME} src/main.cpp)
 add_executable(${PROJECT_NAME}-ut tests/test.cpp)

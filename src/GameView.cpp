@@ -7,7 +7,7 @@
 #include <iostream>
 
 GameView::GameView(Board& b, Player& p, std::vector<Enemy*>& e) :
-    board_(b), player_(p), enemies_(e), pathToTextures("img/")
+    board_(b), player_(p), enemies_(e), pathToTextures("../img/")
 {
     loadEnemyTexture();
     loadPlayerTextures();
