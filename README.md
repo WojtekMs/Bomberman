@@ -1,6 +1,8 @@
 # Authors
 
-@Tomonike @WojtekMs @LogarithmDerivative
+* [Tomonike](https://github.com/Tomonike/)
+* [WojtekMs](https://github.com/WOjtekMs/)
+* [LogarithmDerivative](https://github.com/LogarithmDerivative/)
 
 # Bomberman
 
