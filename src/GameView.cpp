@@ -12,15 +12,19 @@ GameView::GameView(Board& b, Player& p, std::vector<Enemy*>& e) :
     loadEnemyTexture();
     loadPlayerTextures();
     loadExplosionTextures();
+    textureMap_.loadFromFile(pathToTextures + "map.png");
+    textureWall_.loadFromFile(pathToTextures + "wall.png");
     textureBomb_.loadFromFile(pathToTextures + "bomb.png");
-    gameOverTexture_.loadFromFile(pathToTextures + "game_over.png");
+    textureGameOver_.loadFromFile(pathToTextures + "game_over.png");
 
     setPlayerSprites();
+    spriteMap_.setTexture(textureMap_);
+    spriteWall_.setTexture(textureWall_);
     spriteBomb_.setTexture(textureBomb_);
     spriteExplosionHorizontal_.setTexture(textureExplosionHorizontal_);
     spriteExplosionVertical_.setTexture(textureExplosionVertical_);
-    enemySprite_.setTexture(enemyTexture_);
-    gameOverSprite_.setTexture(gameOverTexture_);
+    spriteEnemy_.setTexture(enemyTexture_);
+    spriteGameOver_.setTexture(textureGameOver_);
 }
 
 void GameView::loadEnemyTexture()
@@ -61,15 +65,14 @@ void GameView::setPlayerSprites()
 
 void GameView::drawBoard(sf::RenderWindow& win)
 {
-    auto wall = board_.getWallSprite();
     auto wallSize = 32;
-    win.draw(board_.getMapSprite());
+    win.draw(spriteMap_);
     for (int row = 0; row < board_.getHeight(); ++row) {
         for (int col = 0; col < board_.getWidth(); ++col) {
             if (board_.getField(col, row).isWall) {
-                wall.setScale(0.5f, 0.5f);
-                wall.setPosition(col * wallSize, row * wallSize);
-                win.draw(wall);
+                spriteWall_.setScale(0.5f, 0.5f);
+                spriteWall_.setPosition(col * wallSize, row * wallSize);
+                win.draw(spriteWall_);
             }
         }
     }
@@ -79,18 +82,17 @@ void GameView::drawEnemies(sf::RenderWindow& win)
 {
     auto enemySize = 32;
     for (auto enemy : enemies_) {
-        enemy->getSprite().setPosition(enemy->getCol() * enemySize, enemy->getRow() * enemySize);
-        win.draw(enemy->getSprite());
+        spriteEnemy_.setPosition(enemy->getCol() * enemySize, enemy->getRow() * enemySize);
+        win.draw(spriteEnemy_);
     }
 }
 
 void GameView::drawBomb(sf::RenderWindow& win)
 {
-    auto spriteBomb = player_.getBombSprite();
     auto bombSize = 32;
-    spriteBomb.setScale(0.65f, 0.65f);
-    spriteBomb.setPosition(player_.getBomb().getCol() * bombSize, player_.getBomb().getRow() * bombSize);
-    win.draw(spriteBomb);
+    spriteBomb_.setScale(0.5f, 0.5f);
+    spriteBomb_.setPosition(player_.getBomb().getCol() * bombSize, player_.getBomb().getRow() * bombSize);
+    win.draw(spriteBomb_);
 }
 
 void GameView::drawPlayer(sf::RenderWindow& win)
@@ -121,7 +123,7 @@ sf::Sprite& GameView::getPlayerSprite()
 
 void GameView::drawGameOver(sf::RenderWindow& win)
 {
-    win.draw(gameOverSprite_);
+    win.draw(spriteGameOver_);
 }
 
 void GameView::drawExplosion(sf::RenderWindow& win)

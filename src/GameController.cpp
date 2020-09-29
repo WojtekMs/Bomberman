@@ -1,6 +1,5 @@
 #include "GameController.hpp"
 #include <cmath>
-#include <iostream>
 
 GameController::GameController(Board& board, Player& player, std::vector<Enemy*>& enemy) :
     board_(board),

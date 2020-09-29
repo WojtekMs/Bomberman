@@ -15,7 +15,6 @@ class GameController {
     Player& player_;
     Board& board_;
     std::vector<Enemy*> enemies_;
-    // Enemy& enemy_;
     sf::Clock bombClock_;
     sf::Clock enemyMoveClock_;
     sf::Clock explosionClock_;

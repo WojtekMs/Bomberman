@@ -1,10 +1,7 @@
 #include "Enemy.hpp"
 #include "Player.hpp"
-#include <iostream>
 
 Enemy::Enemy(Board& board, int col, int row) : Movable(board, col, row) {
-    enemyTexture_.loadFromFile("img/monkey.png");
-    enemySprite_.setTexture(enemyTexture_);
 }
 
 void Enemy::move(sf::Time elapsedTime, Player& player) {
@@ -38,11 +35,6 @@ void Enemy::move(sf::Time elapsedTime, Player& player) {
         }
         totalElapsedTime = 0;
     }
-}
-
-void Enemy::draw(sf::RenderWindow& win) {
-    enemySprite_.setPosition(Movable::getCol() * 32, Movable::getRow() * 32);
-    win.draw(enemySprite_);
 }
 
 void Enemy::setPosition(int col, int row) {

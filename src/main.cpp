@@ -1,5 +1,6 @@
 #include "Board.hpp"
 #include "Enemy.hpp"
+#include "Game.hpp"
 #include "GameController.hpp"
 #include "GameView.hpp"
 #include "Player.hpp"
@@ -20,33 +21,9 @@ int main()
     std::vector<Enemy*> vec{&enemy1, &enemy2, &enemy3, &enemy};
     GameController gc(board, player, vec);
     GameView gv(board, player, vec);
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-            gc.handleEvents(event);
-        }
-        gc.updateGame();
-        window.clear();
-        if (gc.getGameState() == GAME_STATE::LOST) {
-            gv.drawGameOver(window);
-            window.display();
-            continue;
-        }
-        gv.drawBoard(window);
-        if (gc.isBombPlaced()) {
-            gv.drawBomb(window);
-        }
-        gv.drawPlayer(window);
-        gv.drawEnemies(window);
-        if (gc.isExplosion()) {
-            gc.removeEnemies();
-            gv.drawExplosion(window);
-        }
-        window.display();
-    }
+    Game game(gc, gv, window);
+    game.run();
+    
 
     return 0;
 }

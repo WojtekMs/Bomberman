@@ -13,6 +13,8 @@ class GameView {
 
     std::string pathToTextures;
 
+    sf::Texture textureMap_;
+    sf::Texture textureWall_;
     sf::Texture enemyTexture_;
     sf::Texture textureLeft_;
     sf::Texture textureRight_;
@@ -21,9 +23,11 @@ class GameView {
     sf::Texture textureBomb_;
     sf::Texture textureExplosionHorizontal_;
     sf::Texture textureExplosionVertical_;
-    sf::Texture gameOverTexture_;
+    sf::Texture textureGameOver_;
 
-    sf::Sprite enemySprite_;
+    sf::Sprite spriteMap_;
+    sf::Sprite spriteWall_;
+    sf::Sprite spriteEnemy_;
     sf::Sprite spriteLeft_;
     sf::Sprite spriteRight_;
     sf::Sprite spriteUp_;
@@ -31,7 +35,7 @@ class GameView {
     sf::Sprite spriteBomb_;
     sf::Sprite spriteExplosionHorizontal_;
     sf::Sprite spriteExplosionVertical_;
-    sf::Sprite gameOverSprite_;
+    sf::Sprite spriteGameOver_;
 
     void loadEnemyTexture();
     void loadPlayerTextures();
@@ -40,7 +44,7 @@ class GameView {
     sf::Sprite& getPlayerSprite();
     public:
     GameView(Board& b, Player& p, std::vector<Enemy*>& e);
-    //here should be put all drawing functions ;)
+
     void drawBoard(sf::RenderWindow& win);
     void drawEnemies(sf::RenderWindow& win);
     void drawBomb(sf::RenderWindow& win);

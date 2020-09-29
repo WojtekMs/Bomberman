@@ -47,6 +47,7 @@ set(SRC_LIST
   src/GameController.cpp
   src/Movable.cpp
   src/GameView.cpp
+  src/Game.cpp
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/inc)

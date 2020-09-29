@@ -5,8 +5,9 @@
 
 class Game {
     GameController& ctrl_;
-    GameView view_;
+    GameView& view_;
+    sf::RenderWindow& window_;
     public:
-    Game(GameController& gc, GameView& gv);
-    //should have draw function and handleEvents function
+    Game(GameController& gc, GameView& gv, sf::RenderWindow& win);
+    void run();
 };
