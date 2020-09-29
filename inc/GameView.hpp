@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 class Board;
@@ -9,7 +10,7 @@ class Enemy;
 class GameView {
     Board& board_;
     Player& player_;
-    std::vector<Enemy*> enemies_;
+    std::vector<std::shared_ptr<Enemy>> enemies_;
 
     std::string pathToTextures{"../img/"};
 
@@ -43,7 +44,7 @@ class GameView {
     void setPlayerSprites();
     sf::Sprite& getPlayerSprite();
     public:
-    GameView(Board& b, Player& p, std::vector<Enemy*>& e);
+    GameView(Board& b, Player& p, std::vector<std::shared_ptr<Enemy>>& e);
 
     void drawBoard(sf::RenderWindow& win);
     void drawEnemies(sf::RenderWindow& win);

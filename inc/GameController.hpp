@@ -1,9 +1,10 @@
 #pragma once
-
-#include "Board.hpp"
-#include "Player.hpp"
-#include "Enemy.hpp"
 #include <SFML/Graphics.hpp>
+#include <memory>
+
+class Board;
+class Player;
+class Enemy;
 
 enum class GAME_STATE {
     WON,
@@ -14,7 +15,7 @@ enum class GAME_STATE {
 class GameController {
     Player& player_;
     Board& board_;
-    std::vector<Enemy*> enemies_;
+    std::vector<std::shared_ptr<Enemy>> enemies_;
     sf::Clock bombClock_;
     sf::Clock enemyMoveClock_;
     sf::Clock explosionClock_;
@@ -33,7 +34,7 @@ class GameController {
     void updateIsBombBlown();
 
     public:
-    GameController(Board& b, Player& p, std::vector<Enemy*>& e);
+    GameController(Board& b, Player& p, std::vector<std::shared_ptr<Enemy>>& e);
     void handleEvents(sf::Event& event);
     bool isBombPlaced() const { return isBombPlaced_; }
     bool isBombBlown() const { return isBombBlown_; }

@@ -1,14 +1,19 @@
 #include "GameController.hpp"
+
+#include "Board.hpp"
+#include "Bomb.hpp"
+#include "Enemy.hpp"
+#include "Player.hpp"
+
 #include <cmath>
 
-GameController::GameController(Board& board, Player& player, std::vector<Enemy*>& enemy) :
-    board_(board),
-    player_(player),
-    enemies_(enemy) {
-
+GameController::GameController(Board& board, Player& player, std::vector<std::shared_ptr<Enemy>>& enemy) :
+    board_(board), player_(player), enemies_(enemy)
+{
 }
 
-void GameController::handleEvents(sf::Event& event) {
+void GameController::handleEvents(sf::Event& event)
+{
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::W) {
             player_.moveUp();
@@ -33,25 +38,28 @@ void GameController::handleEvents(sf::Event& event) {
     }
 }
 
-void GameController::updateGame() {
+void GameController::updateGame()
+{
     updateGameState();
     moveEnemies();
     updateIsBombBlown();
     updateIsBombPlaced();
 }
 
-void GameController::updateGameState() {
+void GameController::updateGameState()
+{
     if (isBombBlown_ && playerIsInBombRange()) {
         currentGameState = GAME_STATE::LOST;
     }
-    if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](Enemy* enemy) {
+    if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](auto enemy) {
             return enemy->getCol() == player_.getCol() && enemy->getRow() == player_.getRow();
         })) {
         currentGameState = GAME_STATE::LOST;
     }
 }
 
-bool GameController::playerIsInBombRange() {
+bool GameController::playerIsInBombRange()
+{
     auto bomb = player_.getBomb();
     if (player_.getCol() == bomb.getCol() && std::abs(player_.getRow() - bomb.getRow()) <= bomb.getFirePower()) {
         return true;
@@ -62,21 +70,24 @@ bool GameController::playerIsInBombRange() {
     return false;
 }
 
-void GameController::moveEnemies() {
+void GameController::moveEnemies()
+{
     auto time = enemyMoveClock_.restart();
     for (auto enemy : enemies_) {
         enemy->move(time, player_);
     }
 }
 
-void GameController::updateIsBombPlaced() {
+void GameController::updateIsBombPlaced()
+{
     auto timeToBlow = player_.getBomb().getTimeToBlow();
     if (elapsedTimeAfterBlow_.asSeconds() >= timeToBlow + explosionDuration) {
         isBombPlaced_ = false;
     }
 }
 
-void GameController::updateIsBombBlown() {
+void GameController::updateIsBombBlown()
+{
     if (!isBombPlaced_) {
         return;
     }
@@ -90,7 +101,8 @@ void GameController::updateIsBombBlown() {
     }
 }
 
-void GameController::removeEnemies() {
+void GameController::removeEnemies()
+{
     auto bomb = player_.getBomb();
     for (auto enemy : enemies_) {
         if (enemy->getRow() == bomb.getRow()) {
@@ -106,7 +118,8 @@ void GameController::removeEnemies() {
     }
 }
 
-bool GameController::isExplosion() {
+bool GameController::isExplosion()
+{
     if (!isBombPlaced_) {
         return false;
     }

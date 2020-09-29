@@ -1,11 +1,22 @@
 #include "Game.hpp"
 
-Game::Game(GameController& gc, GameView& gv, sf::RenderWindow& win) 
-:ctrl_(gc), view_(gv), window_(win) {
 
+
+Game::Game() :
+    board_(19, 25),
+    player_(board_, 11, 10),
+    enemies_({std::make_shared<Enemy>(board_, 1, 1),
+              std::make_shared<Enemy>(board_, 23, 1),
+              std::make_shared<Enemy>(board_, 1, 17),
+              std::make_shared<Enemy>(board_, 23, 17)}),
+    ctrl_(board_, player_, enemies_),
+    view_(board_, player_, enemies_),
+    window_(sf::VideoMode(800, 608), "Bomberman")
+{
 }
 
-void Game::run() {
+void Game::run()
+{
     while (window_.isOpen()) {
         sf::Event event;
         while (window_.pollEvent(event)) {

@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-GameView::GameView(Board& b, Player& p, std::vector<Enemy*>& e) :
+GameView::GameView(Board& b, Player& p, std::vector<std::shared_ptr<Enemy>>& e) :
     board_(b), player_(p), enemies_(e), pathToTextures("../img/")
 {
     loadEnemyTexture();
@@ -132,9 +132,11 @@ void GameView::drawExplosion(sf::RenderWindow& win)
     auto explosionHorizontalOffset = player_.getBomb().getCol() - 2.5;
     auto explosionVeritcalOffset = player_.getBomb().getRow() - 2.5;
     spriteExplosionHorizontal_.setScale(0.65f, 0.65f);
-    spriteExplosionHorizontal_.setPosition(explosionHorizontalOffset * explosionSize, player_.getBomb().getRow() * explosionSize);
+    spriteExplosionHorizontal_.setPosition(explosionHorizontalOffset * explosionSize,
+                                           player_.getBomb().getRow() * explosionSize);
     spriteExplosionVertical_.setScale(0.65f, 0.65f);
-    spriteExplosionVertical_.setPosition(player_.getBomb().getCol() * explosionSize, explosionVeritcalOffset * explosionSize);
+    spriteExplosionVertical_.setPosition(player_.getBomb().getCol() * explosionSize,
+                                         explosionVeritcalOffset * explosionSize);
     win.draw(spriteExplosionHorizontal_);
     win.draw(spriteExplosionVertical_);
 }

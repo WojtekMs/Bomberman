@@ -1,11 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
-#include "Bomb.hpp"
 #include "Movable.hpp"
+#include "Bomb.hpp"
 
 class Board;
-
 
 class Player :public Movable {
     Bomb bomb_;
@@ -13,5 +11,5 @@ class Player :public Movable {
     public:
     Player(Board& board, int col, int row);
     void placeBomb();
-    Bomb& getBomb()  { return bomb_; }
+    Bomb& getBomb();
 };
