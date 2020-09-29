@@ -23,47 +23,25 @@ void GameController::handleEvents(sf::Event& event) {
             player_.moveRight();
         }
         if (event.key.code == sf::Keyboard::Space) {
+            if (isBombPlaced_) {
+                return;
+            }
             player_.placeBomb();
-            if (!isClockResetted_) {
-                bombClock_ = sf::Clock();
-                isClockResetted_ = true;
-            }
+            bombClock_.restart();
+            isBombPlaced_ = true;
         }
     }
 }
 
-bool GameController::checkIfBombBlow() {
-    if (!player_.isBombPlaced()) {
-        return false;
-    }
-    auto elapsedTime = bombClock_.getElapsedTime();
-    player_.updateIsBombPlaced(elapsedTime);
-    if (elapsedTime.asSeconds() >= player_.getBomb().getTimeToBlow()) {
-        isClockResetted_ = false;
-        return true;
-    }
-    return false;
-}
-
-void GameController::removeEnemies() {
-    auto bomb = player_.getBomb();
-
-    for (auto enemy : enemies_) {
-        if (enemy->getRow() == bomb.getRow()) {
-            if (std::abs(enemy->getCol() - bomb.getCol()) <= bomb.getFirePower()) {
-                enemy->setPosition(-1, -1);
-            }
-        }
-        if (enemy->getCol() == bomb.getCol()) {
-            if (std::abs(enemy->getRow() - bomb.getRow()) <= bomb.getFirePower()) {
-                enemy->setPosition(-1, -1);
-            }
-        }
-    }
+void GameController::updateGame() {
+    updateGameState();
+    moveEnemies();
+    updateIsBombBlown();
+    updateIsBombPlaced();
 }
 
 void GameController::updateGameState() {
-    if (checkIfBombBlow() && playerIsInBombRange()) {
+    if (isBombBlown_ && playerIsInBombRange()) {
         currentGameState = GAME_STATE::LOST;
     }
     if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](Enemy* enemy) {
@@ -89,4 +67,55 @@ void GameController::moveEnemies() {
     for (auto enemy : enemies_) {
         enemy->move(time, player_);
     }
+}
+
+void GameController::updateIsBombPlaced() {
+    auto timeToBlow = player_.getBomb().getTimeToBlow();
+    if (elapsedTimeAfterBlow_.asSeconds() >= timeToBlow + explosionDuration) {
+        isBombPlaced_ = false;
+    }
+}
+
+void GameController::updateIsBombBlown() {
+    if (!isBombPlaced_) {
+        return;
+    }
+    elapsedTimeAfterBlow_ = bombClock_.getElapsedTime();
+    auto timeToBlow = player_.getBomb().getTimeToBlow();
+    if (elapsedTimeAfterBlow_.asSeconds() >= timeToBlow) {
+        isBombBlown_ = true;
+    }
+    if (elapsedTimeAfterBlow_.asSeconds() >= timeToBlow + explosionDuration) {
+        isBombBlown_ = false;
+    }
+}
+
+void GameController::removeEnemies() {
+    auto bomb = player_.getBomb();
+    for (auto enemy : enemies_) {
+        if (enemy->getRow() == bomb.getRow()) {
+            if (std::abs(enemy->getCol() - bomb.getCol()) <= bomb.getFirePower()) {
+                enemy->setPosition(-1, -1);
+            }
+        }
+        if (enemy->getCol() == bomb.getCol()) {
+            if (std::abs(enemy->getRow() - bomb.getRow()) <= bomb.getFirePower()) {
+                enemy->setPosition(-1, -1);
+            }
+        }
+    }
+}
+
+bool GameController::isExplosion() {
+    if (!isBombPlaced_) {
+        return false;
+    }
+    if (isBombBlown_) {
+        explosionClock_.restart();
+    }
+    auto timeOfExplosion = explosionClock_.getElapsedTime().asSeconds();
+    if (timeOfExplosion <= explosionDuration) {
+        return true;
+    }
+    return false;
 }

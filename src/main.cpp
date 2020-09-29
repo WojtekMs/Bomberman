@@ -1,16 +1,17 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <string>
-
 #include "Board.hpp"
 #include "Enemy.hpp"
 #include "GameController.hpp"
 #include "Player.hpp"
 
-int main() {
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
+
+int main()
+{
     sf::RenderWindow window(sf::VideoMode(800, 608), "Bomberman");
     Board board(19, 25);
-    Player player(board, 10, 10);
+    Player player(board, 11, 10);
     Enemy enemy(board, 8, 8);
     Enemy enemy1(board, 7, 6);
     Enemy enemy2(board, 6, 3);
@@ -18,13 +19,14 @@ int main() {
     std::vector<Enemy*> vec{&enemy1, &enemy2, &enemy3, &enemy};
     GameController gc(board, player, vec);
     sf::Clock clock;
-    bool animationBegins = false;
+    bool clockReseted = false;
+    bool animationBegins = true;
     sf::Texture gameover_;
     if (!gameover_.loadFromFile("img/game_over.png")) {
         std::cerr << "Error :CCCCCCCCCCC\n";
     }
-    sf::Sprite sprite_;
-    sprite_.setTexture(gameover_);
+    sf::Sprite gameOverSprite_;
+    gameOverSprite_.setTexture(gameover_);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -34,33 +36,25 @@ int main() {
             }
             gc.handleEvents(event);
         }
-        gc.moveEnemies();
-        gc.updateGameState();
+        gc.updateGame();
         window.clear();
-        if (gc.getGameState() != GAME_STATE::LOST) {
-            window.draw(board.getSprite());
-            board.draw(window);
-            if (player.isBombPlaced()) {
-                player.drawBomb(window);
-            }
-            player.draw(player.getCurrentDirection(), window);
-            enemy.draw(window);
-            enemy1.draw(window);
-            enemy2.draw(window);
-            enemy3.draw(window);
-            if (gc.checkIfBombBlow()) {
-                gc.removeEnemies();
-                clock.restart();
-                animationBegins = true;
-            }
-            if (animationBegins) {
-                player.drawExplosion(window);
-                if (clock.getElapsedTime().asSeconds() > 0.7) {
-                    animationBegins = false;
-                }
-            }
-        } else {
-            window.draw(sprite_);
+        if (gc.getGameState() == GAME_STATE::LOST) {
+            window.draw(gameOverSprite_);
+            window.display();
+            continue;
+        }
+        board.draw(window);
+        if (gc.isBombPlaced()) {
+            player.drawBomb(window);
+        }
+        player.draw(player.getCurrentDirection(), window);
+        enemy.draw(window);
+        enemy1.draw(window);
+        enemy2.draw(window);
+        enemy3.draw(window);
+        if (gc.isExplosion()) {
+            gc.removeEnemies();
+            player.drawExplosion(window);
         }
         window.display();
     }

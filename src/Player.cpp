@@ -26,11 +26,7 @@ Player::Player(Board& board, int col, int row)
 }
 
 void Player::placeBomb() {
-    if (isBombPlaced_) {
-        return;
-    }
     bomb_ = Bomb(Movable::getCol(), Movable::getRow());
-    isBombPlaced_ = true;
 }
 
 void Player::draw(Direction dir, sf::RenderWindow& win) {
@@ -48,15 +44,16 @@ void Player::draw(Direction dir, sf::RenderWindow& win) {
     case Direction::RIGHT:
         ptr = &spriteRight_;
     }
+    ptr->setScale(0.65f, 0.65f);
     ptr->setPosition(Movable::getCol() * 32, Movable::getRow() * 32);
     win.draw(*ptr);
 }
 
-void Player::updateIsBombPlaced(sf::Time elapsedTime) {
-    if (elapsedTime.asSeconds() >= bomb_.getTimeToBlow()) {
-        isBombPlaced_ = false;
-    }
-}
+// void Player::updateIsBombPlaced(sf::Time elapsedTime) {
+//     if (elapsedTime.asSeconds() >= bomb_.getTimeToBlow()) {
+//         isBombPlaced_ = false;
+//     }
+// }
 
 void Player::drawBomb(sf::RenderWindow& win) {
     spriteBomb_.setScale(0.65f, 0.65f);

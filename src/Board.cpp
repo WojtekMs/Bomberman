@@ -40,6 +40,7 @@ sf::Sprite Board::getWall() const {
 }
 
 void Board::draw(sf::RenderWindow& win) {
+    win.draw(map_);
     for (int row = 0; row < height_; ++row) {
         for (int col = 0; col < width_; ++col) {
             if(board_[row][col].isWall) {
