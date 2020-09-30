@@ -6,7 +6,7 @@
 
 # Bomberman
 
-Simple bomberman made with SFML in C++. Durning develomplent project changed to something like monkey hunter, but there is still plenty thigs TODO :)
+Simple bomberman made with SFML in C++. Durning development project changed to something like monkey hunter, but there is still plenty thigs TODO :)
 
 # Requirements
 
