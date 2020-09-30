@@ -18,8 +18,7 @@ After entering game directory type following commands
 `mkdir build`  
 `cd build/`  
 `cmake ../`  
-`make`  
-`cd ../`  
+`make`   
 `./Bomberman`  
 And thats about it :)
 
@@ -31,7 +30,5 @@ Monkeys are always chasing you and taking away your health, after 3 hits it's ga
 
 # TODO
 
-- Sometimes explosion doesn't show up
 - Displaying player health
 - Bomb's range should be based on distance to wall
-- Change img file paths so launching game will be possible in `build/`
