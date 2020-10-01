@@ -19,9 +19,9 @@ class GameController {
     sf::Clock bombClock_;
     sf::Clock enemyMoveClock_;
     sf::Clock explosionClock_;
-    sf::Time elapsedTimeAfterBlow_;
+    sf::Time elapsedTimeAfterBombPlaced_;
 
-    bool isClockResetted_{false};
+    bool isExplosionClockRestarted_{false};
     bool isBombPlaced_{false};
     bool isBombBlown_{false};
 
@@ -32,6 +32,7 @@ class GameController {
     void moveEnemies();
     void updateIsBombPlaced();
     void updateIsBombBlown();
+    void updateExplosionClock();
 
     public:
     GameController(Board& b, Player& p, std::vector<std::shared_ptr<Enemy>>& e);

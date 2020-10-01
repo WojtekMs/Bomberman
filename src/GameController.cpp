@@ -44,6 +44,7 @@ void GameController::updateGame()
     moveEnemies();
     updateIsBombBlown();
     updateIsBombPlaced();
+    updateExplosionClock();
 }
 
 void GameController::updateGameState()
@@ -51,7 +52,7 @@ void GameController::updateGameState()
     if (isBombBlown_ && playerIsInBombRange()) {
         currentGameState = GAME_STATE::LOST;
     }
-    if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](auto enemy) {
+    if (std::any_of(enemies_.cbegin(), enemies_.cend(), [this](auto & enemy) {
             return enemy->getCol() == player_.getCol() && enemy->getRow() == player_.getRow();
         })) {
         currentGameState = GAME_STATE::LOST;
@@ -81,7 +82,7 @@ void GameController::moveEnemies()
 void GameController::updateIsBombPlaced()
 {
     auto timeToBlow = player_.getBomb().getTimeToBlow();
-    if (elapsedTimeAfterBlow_.asSeconds() >= timeToBlow + explosionDuration) {
+    if (elapsedTimeAfterBombPlaced_.asSeconds() >= timeToBlow + explosionDuration) {
         isBombPlaced_ = false;
     }
 }
@@ -91,13 +92,23 @@ void GameController::updateIsBombBlown()
     if (!isBombPlaced_) {
         return;
     }
-    elapsedTimeAfterBlow_ = bombClock_.getElapsedTime();
+    elapsedTimeAfterBombPlaced_ = bombClock_.getElapsedTime();
     auto timeToBlow = player_.getBomb().getTimeToBlow();
-    if (elapsedTimeAfterBlow_.asSeconds() >= timeToBlow) {
+    if (elapsedTimeAfterBombPlaced_.asSeconds() >= timeToBlow) {
         isBombBlown_ = true;
     }
-    if (elapsedTimeAfterBlow_.asSeconds() >= timeToBlow + explosionDuration) {
+    if (elapsedTimeAfterBombPlaced_.asSeconds() >= timeToBlow + explosionDuration) {
         isBombBlown_ = false;
+    }
+}
+
+void GameController::updateExplosionClock() {
+    if (isBombBlown_ && !isExplosionClockRestarted_) {
+        explosionClock_.restart();
+        isExplosionClockRestarted_ = true;
+    }
+    if (isExplosionClockRestarted_ && !isExplosion()) {
+        isExplosionClockRestarted_ = false;
     }
 }
 
@@ -122,9 +133,6 @@ bool GameController::isExplosion()
 {
     if (!isBombPlaced_) {
         return false;
-    }
-    if (isBombBlown_) {
-        explosionClock_.restart();
     }
     auto timeOfExplosion = explosionClock_.getElapsedTime().asSeconds();
     if (timeOfExplosion <= explosionDuration) {
