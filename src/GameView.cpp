@@ -119,6 +119,7 @@ sf::Sprite& GameView::getPlayerSprite()
         case Direction::RIGHT:
             return spriteRight_;
     }
+    throw std::domain_error("GameView.cpp:122 - no other direction than up/down/left/right is supported!");
 }
 
 void GameView::drawGameOver(sf::RenderWindow& win)
